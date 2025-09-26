@@ -1,1 +1,1 @@
-web: bash -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT}"
+web: bash -c "mkdir -p storage/app/qr storage/app/surat && ln -s /app/storage/app/qr /app/public/qr && ln -s /app/storage/app/surat /app/public/surat && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT}"
