@@ -10,6 +10,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\SvgWriter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class DocumentController extends Controller
@@ -52,6 +53,17 @@ class DocumentController extends Controller
         $result->saveToFile(storage_path($qrCodePath));
 
         DocumentModel::create([
+            'id' => $uuid,
+            'number' => $request->input('number'),
+            'title' => $request->input('title'),
+            'filename' => $filename,
+            'hash' => $hash,
+            'qr_code' => $qrCodePath,
+            'status' => 'valid',
+        ]);
+
+        // logging
+        Log::info('Document uploaded', [
             'id' => $uuid,
             'number' => $request->input('number'),
             'title' => $request->input('title'),
